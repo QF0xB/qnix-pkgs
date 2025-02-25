@@ -12,7 +12,7 @@ stdenvNoCC.mkDerivation {
     owner = "adi1090x";
     repo = "rofi";
     rev = "master";
-    sha256 = "lib.fakeSha256"; # Replace with actual hash after first attempt
+    sha256 = "sha256-TVZ7oTdgZ6d9JaGGa6kVkK7FMjNeuhVTPNj2d7zRWzM="; # Replace with actual hash after first attempt
   };
 
   installPhase = ''

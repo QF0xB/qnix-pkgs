@@ -35,9 +35,9 @@
           pkgs = nixpkgsFor.${system};
         in
         {
-          inherit (pkgs.qnix-pkgs) rofi-themes;
+          inherit (pkgs.qnix-pkgs) rofi-allthemes;
           # Add more packages here as needed
-          default = pkgs.qnix-pkgs.rofi-themes;
+          default = pkgs.qnix-pkgs.rofi-allthemes;
         }
       );
 
