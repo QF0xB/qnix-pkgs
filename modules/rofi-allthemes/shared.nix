@@ -8,7 +8,7 @@
 with lib;
 
 let
-  cfg = config.programs.qnix.rofi-allthemes;
+  cfg = config.programs.rofi-allthemes;
 in
 {
   options.programs.qnix.rofi-allthemes = {

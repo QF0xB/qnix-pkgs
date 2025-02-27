@@ -1,78 +1,69 @@
 {
-  description = "qnix-pkgs - Custom package collection";
-
   inputs = {
     nixpkgs.url = "github:NixOS/nixpkgs/nixos-unstable";
+    home-manager = {
+      url = "github:nix-community/home-manager";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
   };
 
   outputs =
-    { self, nixpkgs, ... }:
+    {
+      self,
+      nixpkgs,
+      home-manager,
+      ...
+    }:
     let
-      supportedSystems = [
+      systems = [
         "x86_64-linux"
         "aarch64-linux"
         "x86_64-darwin"
         "aarch64-darwin"
       ];
+      forAllSystems = nixpkgs.lib.genAttrs systems;
 
-      # Helper function to generate an attrset '{ x86_64-linux = f "x86_64-linux"; ... }'
-      forAllSystems = nixpkgs.lib.genAttrs supportedSystems;
-
-      # Nixpkgs instantiated for supported systems
-      nixpkgsFor = forAllSystems (
-        system:
-        import nixpkgs {
-          inherit system;
-          overlays = [ self.overlays.default ];
-        }
-      );
+      # Create a unified module that works for both NixOS and Home Manager
+      rofiAllThemesModule = import ./modules/programs/rofi-allthemes.nix;
     in
     {
-      # Packages available through the overlay
+      overlays.default = import ./overlays/default.nix;
+
+      # Create a unified NixOS module that also sets up home-manager
+      nixosModules.default =
+        {
+          config,
+          lib,
+          pkgs,
+          ...
+        }:
+        {
+          imports = [ rofiAllThemesModule ];
+
+          # Forward the options to home-manager if it's available
+          home-manager.users = lib.mkIf (config ? home-manager.users) (
+            lib.mapAttrs (username: userConfig: {
+              imports = [ rofiAllThemesModule ];
+            }) config.home-manager.users
+          );
+        };
+
+      # Also provide direct home-manager modules for completeness
+      homeManagerModules.default = {
+        imports = [ rofiAllThemesModule ];
+      };
+
       packages = forAllSystems (
         system:
         let
-          pkgs = nixpkgsFor.${system};
+          pkgs = import nixpkgs {
+            inherit system;
+            overlays = [ self.overlays.default ];
+          };
         in
         {
           inherit (pkgs.qnix-pkgs) rofi-allthemes;
-          # Add more packages here as needed
-
-          # Define a default value
           default = pkgs.qnix-pkgs.rofi-allthemes;
-        }
-      );
-
-      # Overlay providing all packages
-      overlays.default = final: prev: import ./overlays/default.nix final prev;
-
-      nixosModules = {
-        rofi-allthemes = import ./modules/rofi-allthemes/nixosModule.nix;
-        default = {
-          imports = [ self.nixosModules.rofi-allthemes ];
-        };
-      };
-
-      homeManagerModules = {
-        rofi-allthemes = import ./modules/rofi-allthemes/homeModule.nix;
-        default = {
-          imports = [ self.homeManagerModules.rofi-allthemes ];
-        };
-      };
-
-      # Development shell for working on these packages
-      devShells = forAllSystems (
-        system:
-        let
-          pkgs = nixpkgsFor.${system};
-        in
-        {
-          default = pkgs.mkShell {
-            buildInputs = with pkgs; [
-              git
-              rofi-wayland
-            ];
-          };
         }
       );
     };
