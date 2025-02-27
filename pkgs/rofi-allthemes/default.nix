@@ -7,7 +7,7 @@
 
 stdenv.mkDerivation {
   pname = "rofi-allthemes";
-  version = "1.1.0";
+  version = "1.2.0";
 
   src = fetchFromGitHub {
     owner = "adi1090x";
@@ -19,6 +19,9 @@ stdenv.mkDerivation {
   installPhase = ''
     # Create the destination directory
     mkdir -p $out/share/rofi
+
+    # Do NOT copy config.rasi
+    rm files/config.rasi
 
     # Copy files from the source to the destination
     cp -r files/* $out/share/rofi/

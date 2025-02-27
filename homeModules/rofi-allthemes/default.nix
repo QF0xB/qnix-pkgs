@@ -30,7 +30,7 @@ in
     ];
 
     xdg.configFile = {
-      "rofi/theme" = {
+      "rofi" = {
         source = "${pkgs.qnix-pkgs.rofi-allthemes.override { colorScheme = cfg.colorScheme; }}/share/rofi";
         recursive = true;
       };
