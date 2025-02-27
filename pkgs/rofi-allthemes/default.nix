@@ -27,11 +27,14 @@ stdenv.mkDerivation {
     cp -r files/* $out/share/rofi/
 
     # Create a global colors.rasi file that imports the selected color scheme
-    echo '@import "colors/${colorScheme}.rasi"' > $out/share/rofi/colors.rasi
+    echo '@import "colors/${colorScheme}.rasi"' > $out/share/rofi/colors.rasi 
 
-    # Update all shared/colors.rasi files to use the global colors.rasi
-    find $out/share/rofi -path "*/shared/colors.rasi" -type f -exec \
-      echo '@import "~/.config/rofi/colors.rasi"' > {} \;
+    runHook postInstall
+  '';
+
+  postInstall = ''
+    # Find all colors.rasi files and replace the import line with the exact string
+    find $out -type f -name "colors.rasi" -exec sed -i 's|@import "~/.config/rofi/colors/.*"|@import "~/.config/rofi/color-theme.rasi"|g' {} \;
   '';
 
   meta = with lib; {

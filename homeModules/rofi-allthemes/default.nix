@@ -31,8 +31,13 @@ in
 
     xdg.configFile = {
       "rofi" = {
-        source = "${pkgs.qnix-pkgs.rofi-allthemes.override { colorScheme = cfg.colorScheme; }}/share/rofi";
+        source = "${pkgs.qnix-pkgs.rofi-allthemes}/share/rofi";
         recursive = true;
+      };
+      "rofi/color-theme.rasi" = {
+        text = ''
+          @import "~/.config/rofi/colors/${cfg.colorScheme}.rasi"
+        '';
       };
     };
   };
