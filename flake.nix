@@ -32,7 +32,7 @@
       # NixOS modules
       nixosModules = {
         # Import individual modules
-        rofi-allthemes = import ./nixosModules/programs/rofi-allthemes.nix;
+        rofi-allthemes = import ./nixosModules/rofi-allthemes/default.nix;
         # Add other individual modules here
 
         # Default module that imports everything
@@ -53,7 +53,7 @@
       # Home Manager modules
       homeManagerModules = {
         # Import individual modules
-        rofi-allthemes = import ./homeModules/programs/rofi-allthemes.nix;
+        rofi-allthemes = import ./homeModules/rofi-allthemes/default.nix;
         # Add other individual modules here
 
         # Default module that imports everything
