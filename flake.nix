@@ -29,28 +29,37 @@
     {
       overlays.default = import ./overlays/default.nix;
 
-      # Create a unified NixOS module that also sets up home-manager
-      nixosModules.default =
-        {
-          config,
-          lib,
-          pkgs,
-          ...
-        }:
-        {
-          imports = [ rofiAllThemesModule ];
+      # NixOS modules
+      nixosModules = {
+        # Import individual modules
+        rofi-allthemes = import ./nixosModules/programs/rofi-allthemes.nix;
+        # Add other individual modules here
 
-          # Forward the options to home-manager if it's available
-          home-manager.users = lib.mkIf (config ? home-manager.users) (
-            lib.mapAttrs (username: userConfig: {
-              imports = [ rofiAllThemesModule ];
-            }) config.home-manager.users
-          );
+        # Default module that imports everything
+        default = {
+          imports = [
+            ./nixosModules/default.nix
+            # This forwards configurations to home-manager if it's available
+            (
+              { config, lib, ... }:
+              lib.mkIf (config ? home-manager.users) {
+                home-manager.sharedModules = [ ./homeModules/default.nix ];
+              }
+            )
+          ];
         };
+      };
 
-      # Also provide direct home-manager modules for completeness
-      homeManagerModules.default = {
-        imports = [ rofiAllThemesModule ];
+      # Home Manager modules
+      homeManagerModules = {
+        # Import individual modules
+        rofi-allthemes = import ./homeModules/programs/rofi-allthemes.nix;
+        # Add other individual modules here
+
+        # Default module that imports everything
+        default = {
+          imports = [ ./homeModules/default.nix ];
+        };
       };
 
       packages = forAllSystems (
