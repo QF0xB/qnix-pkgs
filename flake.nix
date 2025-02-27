@@ -37,12 +37,28 @@
         {
           inherit (pkgs.qnix-pkgs) rofi-allthemes;
           # Add more packages here as needed
+
+          # Define a default value
           default = pkgs.qnix-pkgs.rofi-allthemes;
         }
       );
 
       # Overlay providing all packages
       overlays.default = final: prev: import ./overlays/default.nix final prev;
+
+      nixosModules = {
+        rofi-allthemes = import ./modules/rofi-allthemes/nixosModule.nix;
+        default = {
+          imports = [ self.nixosModules.rofi-allthemes ];
+        };
+      };
+
+      homeManagerModules = {
+        rofi-allthemes = import ./modules/rofi-allthemes/homeModule.nix;
+        default = {
+          imports = [ self.homeManagerModules.rofi-allthemes ];
+        };
+      };
 
       # Development shell for working on these packages
       devShells = forAllSystems (
