@@ -24,7 +24,7 @@ in
     applets = {
       type = mkOption {
         type = types.str;
-        default = "1";
+        default = "2";
         description = "Type of applet";
         example = "1-3";
       };
