@@ -1,0 +1,4 @@
+[rofi-allthemes]
+src.git = "https://github.com/adi1090x/rofi"
+fetch.git = "https://github.com/adi1090x/rofi"
+

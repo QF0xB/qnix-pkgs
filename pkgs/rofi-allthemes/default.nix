@@ -1,20 +1,25 @@
 {
   lib,
   stdenv,
-  fetchFromGitHub,
+  pkgs,
   colorScheme ? "solarized", # Default color scheme
 }:
 
+let
+  sources = import ./_sources/generated.nix {
+    inherit (pkgs)
+      fetchurl
+      fetchgit
+      fetchFromGitHub
+      dockerTools
+      ;
+  };
+in
 stdenv.mkDerivation {
   pname = "rofi-allthemes";
-  version = "1.2.0";
+  version = sources.rofi-allthemes.version;
 
-  src = fetchFromGitHub {
-    owner = "adi1090x";
-    repo = "rofi";
-    rev = "master";
-    sha256 = "sha256-TVZ7oTdgZ6d9JaGGa6kVkK7FMjNeuhVTPNj2d7zRWzM=";
-  };
+  src = sources.rofi-allthemes.src;
 
   installPhase = ''
     # Create the destination directory
@@ -27,7 +32,7 @@ stdenv.mkDerivation {
     cp -r files/* $out/share/rofi/
 
     # Create a global colors.rasi file that imports the selected color scheme
-    echo '@import "colors/${colorScheme}.rasi"' > $out/share/rofi/colors.rasi 
+    echo '@import "colors/${colorScheme}.rasi"' > $out/share/rofi/colors-theme.rasi 
 
     runHook postInstall
   '';
