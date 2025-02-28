@@ -20,6 +20,21 @@ in
       description = "Color scheme to use for rofi themes";
       example = "nord";
     };
+
+    applets = {
+      type = mkOption {
+        type = types.str;
+        default = "1";
+        description = "Type of applet";
+        example = "1-3";
+      };
+      style = mkOption {
+        type = types.str;
+        default = "1";
+        description = "Style of applet";
+        example = "1-3";
+      };
+    };
   };
 
   config = mkIf cfg.enable {
@@ -39,6 +54,10 @@ in
           @import "~/.config/rofi/colors/${cfg.colorScheme}.rasi"
         '';
       };
+      "rofi/applets/shared/theme.bash".text = ''
+        type="$HOME/.config/rofi/applets/type-${cfg.applets.type}"
+        style='style-${cfg.applets.style}.rasi'
+      '';
     };
   };
 }

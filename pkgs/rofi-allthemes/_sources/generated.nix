@@ -3,15 +3,15 @@
 {
   rofi-allthemes = {
     pname = "rofi-allthemes";
-    version = "9d27f13bc7aabeaf755a32fcc640713256f7433e";
+    version = "b3be0c4d24d2967b6828d6ea01d993aa3ab04470";
     src = fetchgit {
-      url = "https://github.com/adi1090x/rofi";
-      rev = "9d27f13bc7aabeaf755a32fcc640713256f7433e";
+      url = "https://github.com/Stormfox2/rofi-allthemes";
+      rev = "b3be0c4d24d2967b6828d6ea01d993aa3ab04470";
       fetchSubmodules = false;
       deepClone = false;
       leaveDotGit = false;
       sparseCheckout = [ ];
-      sha256 = "sha256-wwLcb7z5jCKgKPY5mNhYIoPvKbVO3PwULrJ+Lm3Ra7g=";
+      sha256 = "sha256-nkqY10JJGv/NJN78JS73C4MvRz8toxIcq3deywVaA4M=";
     };
     date = "2025-02-28";
   };

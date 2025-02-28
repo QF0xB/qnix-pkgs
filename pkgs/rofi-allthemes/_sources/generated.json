@@ -11,12 +11,12 @@
             "fetchSubmodules": false,
             "leaveDotGit": false,
             "name": null,
-            "rev": "9d27f13bc7aabeaf755a32fcc640713256f7433e",
-            "sha256": "sha256-wwLcb7z5jCKgKPY5mNhYIoPvKbVO3PwULrJ+Lm3Ra7g=",
+            "rev": "b3be0c4d24d2967b6828d6ea01d993aa3ab04470",
+            "sha256": "sha256-nkqY10JJGv/NJN78JS73C4MvRz8toxIcq3deywVaA4M=",
             "sparseCheckout": [],
             "type": "git",
-            "url": "https://github.com/adi1090x/rofi"
+            "url": "https://github.com/Stormfox2/rofi-allthemes"
         },
-        "version": "9d27f13bc7aabeaf755a32fcc640713256f7433e"
+        "version": "b3be0c4d24d2967b6828d6ea01d993aa3ab04470"
     }
 }
