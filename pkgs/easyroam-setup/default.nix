@@ -8,6 +8,8 @@ pkgs.writeShellApplication {
     openssl
     gawk
     coreutils
+    networkmanager
+    iw
   ];
   runtimeEnv = {
     INPUT_FILE = "/run/secrets/eduroam_QFrame13"; # Set the path here
