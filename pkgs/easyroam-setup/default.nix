@@ -45,7 +45,7 @@ pkgs.writeShellApplication {
     [ -f /etc/easyroam-certs/easyroam_client_cert.pem ] ||  { echo "Aborted, client_cert missing."; exit 1;  }
     [ -f /etc/easyroam-certs/easyroam_root_ca.pem ] ||  { echo "Aborted, root_ca missing."; exit 1;  }
     [ -f /etc/easyroam-certs/easyroam_client_key.pem ] ||  { echo "Aborted, client_key missing."; exit 1;  }
-    [ -f /etc/easyroam-certs/identity ] && Identity=$(cat "$ConfDir/identity") ||  { echo "Aborted, identity missing"; exit 1;  }
+    [ -f /etc/easyroam-certs/identity ] && Identity=$(cat "/etc/easyroam-certs/identity") ||  { echo "Aborted, identity missing"; exit 1;  }
     # Check for nmcli
     if ! type nmcli >/dev/null 2>&1; then
       echo ""
