@@ -10,7 +10,7 @@ pkgs.writeShellApplication {
     coreutils
   ];
   runtimeEnv = {
-    INPUT_FILE = "/run/secrets/eduroam"; # Set the path here
+    INPUT_FILE = "/run/secrets/eduroam_QFrame13"; # Set the path here
   };
   text = ''
     # Your script content here
