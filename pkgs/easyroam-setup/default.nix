@@ -1,6 +1,5 @@
 {
   pkgs ? import <nixpkgs> { },
-  inputFilePath ? "",
 }:
 
 pkgs.writeShellApplication {
@@ -12,7 +11,7 @@ pkgs.writeShellApplication {
   ];
   text = ''
     # Your script content here
-    InputFile=${inputFilePath}
+    InputFile=${INPUT_FILE: -/run/secrets/eduroam}
 
     set -e
         # Ensure we are root
