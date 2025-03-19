@@ -3,23 +3,20 @@
   inputFilePath ? "",
 }:
 
-let
-  makeEasyroamSetup =
-    { inputFilePath }:
-    pkgs.writeShellApplication {
-      name = "easyroam-setup";
-      runtimeInputs = with pkgs; [
-        openssl
-        gawk
-        coreutils
-      ];
-      text = ''
-            # Set InputFile directly from the attribute
-            InputFile=${inputFilePath}
+pkgs.writeShellApplication {
+  name = "easyroam-setup";
+  runtimeInputs = with pkgs; [
+    openssl
+    gawk
+    coreutils
+  ];
+  text = ''
+    # Your script content here
+    InputFile=${inputFilePath}
 
-            set -e
+    set -e
         # Ensure we are root
-        if [[ $EUID -ne 0 ]]; then
+    if [[ $EUID -ne 0 ]]; then
           echo "You must be root to run easyroam-setup." 1>&2
           exit 100
         fi
@@ -101,16 +98,5 @@ let
           802-1x.private-key-password "$Pwd" \
           802-1x.private-key "$ConfDir/easyroam_client_key.pem"
         echo "Done."
-
-      '';
-    };
-
-  easyroamSetup = makeEasyroamSetup {
-    inputFilePath = inputFilePath;
-  };
-
-in
-{
-  easyroamSetup = easyroamSetup;
-  makeEasyroamSetup = makeEasyroamSetup;
+  '';
 }
