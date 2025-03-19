@@ -9,9 +9,12 @@ pkgs.writeShellApplication {
     gawk
     coreutils
   ];
+  runtimeEnv = {
+    INPUT_FILE = "/run/secrets/eduroam"; # Set the path here
+  };
   text = ''
     # Your script content here
-    InputFile=${INPUT_FILE: -/run/secrets/eduroam}
+    InputFile=$INPUT_FILE
 
     set -e
         # Ensure we are root
