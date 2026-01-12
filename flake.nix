@@ -71,7 +71,7 @@
           };
         in
         {
-          inherit (pkgs.qnix-pkgs) rofi-allthemes;
+          inherit (pkgs.qnix-pkgs) rofi-allthemes nixos-blur;
           default = pkgs.qnix-pkgs.rofi-allthemes;
         }
       );
